@@ -1,7 +1,9 @@
-package com.intentfilter.here2there;
+package com.intentfilter.here2there.views;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import com.intentfilter.here2there.R;
 
 public class HomeActivity extends AppCompatActivity {
 
