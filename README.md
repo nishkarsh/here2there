@@ -1,5 +1,4 @@
-# here2there
-
+# here2there [![Build Status](https://travis-ci.org/nishkarsh/here2there.svg?branch=master)](https://travis-ci.org/nishkarsh/here2there)
 ### This is a sample transit app with no intention to develop the app for real use.
 
 #### The following details would be added soon:
