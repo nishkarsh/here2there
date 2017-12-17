@@ -16,7 +16,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomePresenter {
-
     private TransitService transitService;
     private Toaster toaster;
     private Logger logger;
@@ -37,6 +36,7 @@ public class HomePresenter {
             @Override
             public void onResponse(@NonNull Call<ServiceResponse> call, @NonNull Response<ServiceResponse> response) {
                 logger.d(response.toString());
+                toaster.toast(R.string.success);
             }
 
             @Override

@@ -53,14 +53,16 @@ public class HomePresenterTest {
 
     @Test
     public void shouldShowToastOnFailureInFetchingRoutes() throws Exception {
+        UnknownHostException exception = new UnknownHostException("Unknown Host");
         homePresenter.presentRoutes();
 
         verify(transitService).getRoutes(callbackCaptor.capture());
 
         Callback callback = callbackCaptor.getValue();
-        callback.onFailure(call, new UnknownHostException("Unkown Host"));
+        callback.onFailure(call, exception);
 
         verify(toaster).toast(R.string.error_occurred);
+        verify(logger).e("An error occurred while fetching routes", exception);
     }
 
     @Test
@@ -74,5 +76,6 @@ public class HomePresenterTest {
         callback.onResponse(call, response);
 
         verify(logger).d(response.toString());
+        verify(toaster).toast(R.string.success);
     }
 }

@@ -20,7 +20,6 @@ public class GatewayFactory {
     private Retrofit retrofit() {
         return new Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
-                .addConverterFactory(JacksonConverterFactory.create())
                 .addConverterFactory(JacksonConverterFactory.create(JsonUtil.objectMapper()))
                 .client(okHttpClientFactory.getClient())
                 .build();

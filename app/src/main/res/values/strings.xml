@@ -2,4 +2,5 @@
     <string name="app_name">Here 2 There</string>
     <string name="text_welcome">Here 2 There Transit App!</string>
     <string name="error_occurred">Sorry! An unknown error occurred.</string>
+    <string name="success">Fetched routes successfully.</string>
 </resources>
