@@ -11,7 +11,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        HomePresenter presenter = new HomePresenter();
+        HomePresenter presenter = new HomePresenter(this);
         presenter.presentRoutes();
     }
 }
