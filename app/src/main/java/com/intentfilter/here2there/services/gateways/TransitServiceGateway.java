@@ -6,6 +6,6 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface TransitServiceGateway {
-    @GET("/transit-app-task/master/data.json")
+    @GET("transit-app-task/master/data.json")
     Call<ServiceResponse> getRoutes();
 }
