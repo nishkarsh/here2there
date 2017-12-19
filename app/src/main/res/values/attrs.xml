@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <declare-styleable name="MaterialEditText">
+        <attr name="enabled" format="boolean" />
+        <attr name="labelText" format="string" />
+        <attr name="android:hint" />
+        <attr name="android:inputType" />
+    </declare-styleable>
+</resources>

@@ -24,7 +24,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class HomePresenterTest {
+public class RouteSearchPresenterTest {
 
     @Mock
     private TransitService transitService;
@@ -37,16 +37,16 @@ public class HomePresenterTest {
     @Captor
     private ArgumentCaptor<Callback> callbackCaptor;
 
-    private HomePresenter homePresenter;
+    private RouteSearchPresenter routeSearchPresenter;
 
     @Before
     public void setUp() throws Exception {
-        homePresenter = new HomePresenter(transitService, toaster, logger);
+        routeSearchPresenter = new RouteSearchPresenter(transitService, toaster, logger);
     }
 
     @Test
     public void shouldGetRoutesFromTransitService() throws Exception {
-        homePresenter.presentRoutes();
+        routeSearchPresenter.presentRoutes();
 
         verify(transitService).getRoutes(any(Callback.class));
     }
@@ -54,7 +54,7 @@ public class HomePresenterTest {
     @Test
     public void shouldShowToastOnFailureInFetchingRoutes() throws Exception {
         UnknownHostException exception = new UnknownHostException("Unknown Host");
-        homePresenter.presentRoutes();
+        routeSearchPresenter.presentRoutes();
 
         verify(transitService).getRoutes(callbackCaptor.capture());
 
@@ -68,7 +68,7 @@ public class HomePresenterTest {
     @Test
     public void shouldLogFetchedResponse() throws Exception {
         Response<ServiceResponse> response = Response.success(new ServiceResponse());
-        homePresenter.presentRoutes();
+        routeSearchPresenter.presentRoutes();
 
         verify(transitService).getRoutes(callbackCaptor.capture());
 
@@ -76,6 +76,6 @@ public class HomePresenterTest {
         callback.onResponse(call, response);
 
         verify(logger).d(response.toString());
-        verify(toaster).toast(R.string.success);
+        verify(toaster).toast(R.string.text_success);
     }
 }

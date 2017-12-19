@@ -15,17 +15,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomePresenter {
+public class RouteSearchPresenter {
     private TransitService transitService;
     private Toaster toaster;
     private Logger logger;
 
-    public HomePresenter(Context context) {
-        this(new TransitService(new GatewayFactory()), new Toaster(context), Logger.loggerFor(HomePresenter.class));
+    public RouteSearchPresenter(Context context) {
+        this(new TransitService(new GatewayFactory()), new Toaster(context), Logger.loggerFor(RouteSearchPresenter.class));
     }
 
     @VisibleForTesting
-    HomePresenter(TransitService transitService, Toaster toaster, Logger logger) {
+    RouteSearchPresenter(TransitService transitService, Toaster toaster, Logger logger) {
         this.transitService = transitService;
         this.toaster = toaster;
         this.logger = logger;
@@ -36,7 +36,7 @@ public class HomePresenter {
             @Override
             public void onResponse(@NonNull Call<ServiceResponse> call, @NonNull Response<ServiceResponse> response) {
                 logger.d(response.toString());
-                toaster.toast(R.string.success);
+                toaster.toast(R.string.text_success);
             }
 
             @Override
