@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:ignore="ContentDescription"
-    tools:context="com.intentfilter.here2there.views.RouteSearchActivity">
+    android:orientation="vertical"
+    tools:context="com.intentfilter.here2there.views.RouteSearchActivity"
+    tools:ignore="ContentDescription">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -49,7 +50,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
-                android:paddingRight="5dp">
+                android:paddingRight="5dp"
+                android:paddingTop="5dp">
 
                 <com.intentfilter.here2there.views.custom.MaterialEditText
                     android:id="@+id/viewOrigin"
@@ -65,7 +67,7 @@
                     android:layout_below="@id/viewOrigin"
                     android:layout_marginBottom="5dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginTop="-10dp"
+                    android:layout_marginTop="-2dp"
                     android:background="@color/mediumGray" />
 
                 <com.intentfilter.here2there.views.custom.MaterialEditText
@@ -77,6 +79,16 @@
                     app:labelText="@string/label_destination" />
 
             </RelativeLayout>
+
         </LinearLayout>
+
     </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/viewRouteList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        tools:listitem="@layout/route_list_item" />
 </LinearLayout>

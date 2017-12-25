@@ -1,10 +1,12 @@
 package com.intentfilter.here2there.presenters;
 
 import com.intentfilter.here2there.R;
+import com.intentfilter.here2there.models.Routes;
 import com.intentfilter.here2there.models.ServiceResponse;
 import com.intentfilter.here2there.services.TransitService;
 import com.intentfilter.here2there.utils.Logger;
 import com.intentfilter.here2there.utils.Toaster;
+import com.intentfilter.here2there.views.RouteSearchView;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,11 +23,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RouteSearchPresenterTest {
 
+    @Mock
+    private RouteSearchView view;
     @Mock
     private TransitService transitService;
     @Mock
@@ -41,7 +46,7 @@ public class RouteSearchPresenterTest {
 
     @Before
     public void setUp() throws Exception {
-        routeSearchPresenter = new RouteSearchPresenter(transitService, toaster, logger);
+        routeSearchPresenter = new RouteSearchPresenter(view, transitService, toaster, logger);
     }
 
     @Test
@@ -66,8 +71,9 @@ public class RouteSearchPresenterTest {
     }
 
     @Test
-    public void shouldLogFetchedResponse() throws Exception {
-        Response<ServiceResponse> response = Response.success(new ServiceResponse());
+    public void shouldPresentFetchedRoutes() throws Exception {
+        ServiceResponse serviceResponse = new ServiceResponse();
+        Response<ServiceResponse> response = Response.success(serviceResponse);
         routeSearchPresenter.presentRoutes();
 
         verify(transitService).getRoutes(callbackCaptor.capture());
@@ -75,7 +81,19 @@ public class RouteSearchPresenterTest {
         Callback callback = callbackCaptor.getValue();
         callback.onResponse(call, response);
 
-        verify(logger).d(response.toString());
-        verify(toaster).toast(R.string.text_success);
+        verify(view).setRoutes(serviceResponse.getRoutes());
+    }
+
+    @Test
+    public void shouldHandleEmptyResponseFromServer() throws Exception {
+        Response<ServiceResponse> response = Response.success(null);
+        routeSearchPresenter.presentRoutes();
+
+        verify(transitService).getRoutes(callbackCaptor.capture());
+
+        Callback callback = callbackCaptor.getValue();
+        callback.onResponse(call, response);
+
+        verify(view, never()).setRoutes(any(Routes.class));
     }
 }

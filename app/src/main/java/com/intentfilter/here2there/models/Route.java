@@ -2,15 +2,34 @@ package com.intentfilter.here2there.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
-
 public class Route {
     @JsonProperty
-    private String type;
+    String type;
     @JsonProperty
-    private String provider;
+    String provider;
     @JsonProperty
-    private List<Segment> segments;
+    Segments segments;
     @JsonProperty
-    private Price price;
+    Price price;
+
+    public String getProvider() {
+        return provider;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public Segments getSegments() {
+        return segments;
+    }
+
+    public int getTravelDurationInMinutes() {
+        int travelDuration = 0;
+        for (Segment segment : segments) {
+            travelDuration += segment.getDurationInMinutes();
+        }
+
+        return travelDuration;
+    }
 }

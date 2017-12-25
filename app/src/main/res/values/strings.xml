@@ -1,11 +1,14 @@
 <resources>
     <string name="app_name">Here 2 There</string>
     <string name="text_success">Fetched routes successfully.</string>
+    <string name="text_display_minutes">(%1$d minutes)</string>
+    <string name="text_travel_modes">Travel modes include %1$s</string>
 
     <string name="hint_enter_origin">Enter Origin</string>
+    <string name="hint_enter_destination">Enter Destination</string>
 
     <string name="label_route_search">Route Search</string>
     <string name="label_origin">Origin</string>
     <string name="label_destination">Destination</string>
-    <string name="hint_enter_destination">Enter Destination</string>
+    <string name="label_search">Search</string>
 </resources>

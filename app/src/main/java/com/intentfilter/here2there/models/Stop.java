@@ -6,11 +6,15 @@ import org.joda.time.DateTime;
 
 public class Stop {
     @JsonProperty("lat")
-    private double latitude;
+    double latitude;
     @JsonProperty("lng")
-    private double longitude;
+    double longitude;
     @JsonProperty
-    private DateTime datetime;
+    DateTime datetime;
     @JsonProperty
-    private String name;
+    String name;
+
+    public DateTime getDatetime() {
+        return datetime;
+    }
 }

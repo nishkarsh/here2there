@@ -10,22 +10,25 @@ import com.intentfilter.here2there.services.TransitService;
 import com.intentfilter.here2there.services.gateways.GatewayFactory;
 import com.intentfilter.here2there.utils.Logger;
 import com.intentfilter.here2there.utils.Toaster;
+import com.intentfilter.here2there.views.RouteSearchView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RouteSearchPresenter {
+    private RouteSearchView view;
     private TransitService transitService;
     private Toaster toaster;
     private Logger logger;
 
-    public RouteSearchPresenter(Context context) {
-        this(new TransitService(new GatewayFactory()), new Toaster(context), Logger.loggerFor(RouteSearchPresenter.class));
+    public RouteSearchPresenter(Context context, RouteSearchView view) {
+        this(view, new TransitService(new GatewayFactory()), new Toaster(context), Logger.loggerFor(RouteSearchPresenter.class));
     }
 
     @VisibleForTesting
-    RouteSearchPresenter(TransitService transitService, Toaster toaster, Logger logger) {
+    RouteSearchPresenter(RouteSearchView view, TransitService transitService, Toaster toaster, Logger logger) {
+        this.view = view;
         this.transitService = transitService;
         this.toaster = toaster;
         this.logger = logger;
@@ -35,8 +38,10 @@ public class RouteSearchPresenter {
         transitService.getRoutes(new Callback<ServiceResponse>() {
             @Override
             public void onResponse(@NonNull Call<ServiceResponse> call, @NonNull Response<ServiceResponse> response) {
-                logger.d(response.toString());
-                toaster.toast(R.string.text_success);
+                ServiceResponse responseBody = response.body();
+                if (responseBody != null) {
+                    view.setRoutes(responseBody.getRoutes());
+                }
             }
 
             @Override

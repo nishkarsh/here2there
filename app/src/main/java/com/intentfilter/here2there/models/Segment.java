@@ -2,23 +2,37 @@ package com.intentfilter.here2there.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.joda.time.DateTime;
+import org.joda.time.Period;
+
 import java.util.List;
 
 public class Segment {
     @JsonProperty
-    private String name;
+    String name;
     @JsonProperty
-    private int numStops;
+    int numStops;
     @JsonProperty
-    private List<Stop> stops;
+    List<Stop> stops;
     @JsonProperty
-    private String travelMode;
+    String travelMode;
     @JsonProperty
-    private String description;
+    String description;
     @JsonProperty
-    private String color;
+    String color;
     @JsonProperty
-    private String iconUrl;
+    String iconUrl;
     @JsonProperty
-    private String polyline;
+    String polyline;
+
+    public String getTravelMode() {
+        return travelMode;
+    }
+
+    public int getDurationInMinutes() {
+        DateTime firstStopTime = stops.get(0).getDatetime();
+        DateTime lastStopTime = stops.get(stops.size() - 1).getDatetime();
+
+        return new Period(firstStopTime, lastStopTime).toStandardMinutes().getMinutes();
+    }
 }
