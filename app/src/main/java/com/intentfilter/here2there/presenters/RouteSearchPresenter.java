@@ -16,6 +16,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 public class RouteSearchPresenter {
     private RouteSearchView view;
     private TransitService transitService;
@@ -35,9 +38,13 @@ public class RouteSearchPresenter {
     }
 
     public void presentRoutes() {
+        setLoaderIndication(true);
+
         transitService.getRoutes(new Callback<ServiceResponse>() {
             @Override
             public void onResponse(@NonNull Call<ServiceResponse> call, @NonNull Response<ServiceResponse> response) {
+                setLoaderIndication(false);
+
                 ServiceResponse responseBody = response.body();
                 if (responseBody != null) {
                     view.setRoutes(responseBody.getRoutes());
@@ -46,9 +53,16 @@ public class RouteSearchPresenter {
 
             @Override
             public void onFailure(@NonNull Call<ServiceResponse> call, @NonNull Throwable throwable) {
+                setLoaderIndication(false);
+
                 logger.e("An error occurred while fetching routes", throwable);
                 toaster.toast(R.string.error_occurred);
             }
         });
+    }
+
+    private void setLoaderIndication(boolean shouldShowLoader) {
+        view.setProgressBarVisibility(shouldShowLoader ? VISIBLE : GONE);
+        view.setSearchButtonVisibility(shouldShowLoader ? GONE : VISIBLE);
     }
 }

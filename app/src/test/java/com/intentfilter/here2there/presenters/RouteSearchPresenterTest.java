@@ -1,5 +1,7 @@
 package com.intentfilter.here2there.presenters;
 
+import android.view.View;
+
 import com.intentfilter.here2there.R;
 import com.intentfilter.here2there.models.Routes;
 import com.intentfilter.here2there.models.ServiceResponse;
@@ -13,6 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -23,6 +26,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
@@ -57,6 +61,16 @@ public class RouteSearchPresenterTest {
     }
 
     @Test
+    public void shouldShowProgressBarWhileFetchingRoutes() throws Exception {
+        routeSearchPresenter.presentRoutes();
+
+        InOrder inOrder = inOrder(view, transitService);
+        inOrder.verify(view).setProgressBarVisibility(View.VISIBLE);
+        inOrder.verify(view).setSearchButtonVisibility(View.GONE);
+        inOrder.verify(transitService).getRoutes(any(Callback.class));
+    }
+
+    @Test
     public void shouldShowToastOnFailureInFetchingRoutes() throws Exception {
         UnknownHostException exception = new UnknownHostException("Unknown Host");
         routeSearchPresenter.presentRoutes();
@@ -68,6 +82,36 @@ public class RouteSearchPresenterTest {
 
         verify(toaster).toast(R.string.error_occurred);
         verify(logger).e("An error occurred while fetching routes", exception);
+    }
+
+    @Test
+    public void shouldRevertProgressBarStatusOnResponse() throws Exception {
+        Response<ServiceResponse> response = Response.success(null);
+        routeSearchPresenter.presentRoutes();
+
+        verify(transitService).getRoutes(callbackCaptor.capture());
+
+        Callback callback = callbackCaptor.getValue();
+        callback.onResponse(call, response);
+
+        InOrder inOrder = inOrder(view);
+        inOrder.verify(view).setProgressBarVisibility(View.GONE);
+        inOrder.verify(view).setSearchButtonVisibility(View.VISIBLE);
+    }
+
+    @Test
+    public void shouldRevertProgressBarStatusOnFailure() throws Exception {
+        UnknownHostException exception = new UnknownHostException("Unknown Host");
+        routeSearchPresenter.presentRoutes();
+
+        verify(transitService).getRoutes(callbackCaptor.capture());
+
+        Callback callback = callbackCaptor.getValue();
+        callback.onFailure(call, exception);
+
+        InOrder inOrder = inOrder(view);
+        inOrder.verify(view).setProgressBarVisibility(View.GONE);
+        inOrder.verify(view).setSearchButtonVisibility(View.VISIBLE);
     }
 
     @Test

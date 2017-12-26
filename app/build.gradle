@@ -10,6 +10,8 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        vectorDrawables.useSupportLibrary = true
+
         buildConfigField 'String', 'BASE_URL', '"https://raw.githubusercontent.com/door2door-io/"'
         buildConfigField 'int', 'READ_TIMEOUT', '15'
         buildConfigField 'int', 'CONNECT_TIMEOUT', '5'
