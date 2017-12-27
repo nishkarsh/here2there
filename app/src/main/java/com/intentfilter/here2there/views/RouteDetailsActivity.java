@@ -29,9 +29,7 @@ import butterknife.ButterKnife;
 
 import static android.graphics.Color.parseColor;
 import static android.support.v7.widget.LinearLayoutManager.VERTICAL;
-import static android.text.TextUtils.isEmpty;
 import static com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom;
-import static com.google.maps.android.PolyUtil.decode;
 
 public class RouteDetailsActivity extends AppCompatActivity implements RouteDetailsView, OnMapReadyCallback {
     final static String EXTRA_ROUTE = BuildConfig.APPLICATION_ID + ".route";
@@ -71,31 +69,11 @@ public class RouteDetailsActivity extends AppCompatActivity implements RouteDeta
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
-        List<Segment> segments = presenter.getSegments();
-
-        for (Segment segment : segments) {
-            String polyline = segment.getPolyline();
-            if (isEmpty(polyline)) {
-                continue;
-            }
-
-            List<LatLng> geoPositions = decode(polyline);
-            plotOnMap(googleMap, segment.getColor(), geoPositions);
-        }
-
-        focusSegment(segments.get(0), 12);
+        presenter.onMapReady();
     }
 
     @Override
-    public void animateCamera(LatLng latLng, int zoomLevel) {
-        googleMap.animateCamera(newLatLngZoom(latLng, zoomLevel));
-    }
-
-    public void focusSegment(Segment segment, int zoomLevel) {
-        presenter.focusSegment(segment, zoomLevel);
-    }
-
-    private void plotOnMap(GoogleMap googleMap, String color, List<LatLng> geoPositions) {
+    public void plotOnMap(String color, List<LatLng> geoPositions) {
         PolylineOptions polylineOptions = new PolylineOptions()
                 .startCap(new RoundCap())
                 .endCap(new SquareCap())
@@ -103,5 +81,15 @@ public class RouteDetailsActivity extends AppCompatActivity implements RouteDeta
                 .addAll(geoPositions);
 
         googleMap.addPolyline(polylineOptions);
+    }
+
+    @Override
+    public void focusSegment(Segment segment, int zoomLevel) {
+        presenter.focusSegment(segment, zoomLevel);
+    }
+
+    @Override
+    public void animateCamera(LatLng latLng, int zoomLevel) {
+        googleMap.animateCamera(newLatLngZoom(latLng, zoomLevel));
     }
 }

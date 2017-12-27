@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -25,6 +26,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RouteDetailsPresenterTest {
@@ -38,7 +40,7 @@ public class RouteDetailsPresenterTest {
     private Segment segment;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         segment = new SegmentBuilder().withDefaults().build();
         Route route = new RouteBuilder().withDefaults().withSegment(segment).build();
         presenter = new RouteDetailsPresenter(view, route);
@@ -56,15 +58,27 @@ public class RouteDetailsPresenterTest {
     }
 
     @Test
-    public void shouldReturnSegments() {
-        List<Segment> segments = presenter.getSegments();
+    public void shouldPlotSegmentsOnMap() {
+        presenter.onMapReady();
 
-        assertThat(segments.size(), is(1));
-        assertThat(segments, hasItem(segment));
+        verify(view).plotOnMap(eq(segment.getColor()), ArgumentMatchers.<LatLng>anyList());
+        verify(view).animateCamera(any(LatLng.class), eq(12));
+        verifyNoMoreInteractions(view);
     }
 
     @Test
-    public void shouldFocusSegmentOnMap() throws Exception {
+    public void shouldPlotSegmentsOnMapIfNoPolylineAvailable() {
+        Segment segment = new SegmentBuilder().withDefaults().withPolyline(null).build();
+        Route route = new RouteBuilder().withDefaults().withSegment(segment).build();
+        presenter = new RouteDetailsPresenter(view, route);
+
+        presenter.onMapReady();
+
+        verifyNoMoreInteractions(view);
+    }
+
+    @Test
+    public void shouldFocusSegmentOnMap() {
         Segment segment = new SegmentBuilder().withDefaults().build();
 
         presenter.focusSegment(segment, 14);
@@ -73,7 +87,7 @@ public class RouteDetailsPresenterTest {
     }
 
     @Test
-    public void shouldNotAttemptFocusSegmentOnMapWhenNoPolylineAvailable() throws Exception {
+    public void shouldNotAttemptFocusSegmentOnMapWhenNoPolylineAvailable() {
         Segment segment = new SegmentBuilder().withDefaults().withPolyline(null).build();
 
         presenter.focusSegment(segment, 14);

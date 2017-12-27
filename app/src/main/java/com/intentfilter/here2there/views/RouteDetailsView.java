@@ -11,4 +11,8 @@ public interface RouteDetailsView {
     void initializeMap();
 
     void animateCamera(LatLng latLng, int zoomLevel);
+
+    void focusSegment(Segment segment, int zoomLevel);
+
+    void plotOnMap(String color, List<LatLng> geoPositions);
 }
