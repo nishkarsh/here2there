@@ -2,13 +2,18 @@ package com.intentfilter.here2there.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.parceler.Parcel;
+
+import java.util.List;
+
+@Parcel
 public class Route {
     @JsonProperty
     String type;
     @JsonProperty
     String provider;
     @JsonProperty
-    Segments segments;
+    List<Segment> segments;
     @JsonProperty
     Price price;
 
@@ -20,7 +25,7 @@ public class Route {
         return type;
     }
 
-    public Segments getSegments() {
+    public List<Segment> getSegments() {
         return segments;
     }
 

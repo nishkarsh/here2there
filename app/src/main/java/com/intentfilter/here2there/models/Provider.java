@@ -4,15 +4,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Provider {
     @JsonProperty
-    private String providerIconUrl;
+    String providerIconUrl;
     @JsonProperty
-    private String disclaimer;
+    String disclaimer;
     @JsonProperty
-    private String iosTunesUrl;
+    String iosTunesUrl;
     @JsonProperty
-    private String iosAppUrl;
+    String iosAppUrl;
     @JsonProperty
-    private String androidPackageName;
+    String androidPackageName;
     @JsonProperty
-    private String displayName;
+    String displayName;
 }

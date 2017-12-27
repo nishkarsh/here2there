@@ -1,6 +1,7 @@
 package com.intentfilter.here2there.views;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,13 +12,15 @@ import android.widget.TextView;
 import com.intentfilter.here2there.R;
 import com.intentfilter.here2there.models.Route;
 import com.intentfilter.here2there.models.Segment;
-import com.intentfilter.here2there.models.Segments;
+
+import org.parceler.Parcels;
 
 import java.util.HashSet;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 class RoutesAdapter extends RecyclerView.Adapter {
     private List<Route> routes;
@@ -44,7 +47,7 @@ class RoutesAdapter extends RecyclerView.Adapter {
         return routes.size();
     }
 
-    static class RouteViewHolder extends RecyclerView.ViewHolder {
+    class RouteViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.viewProvider)
         TextView providerView;
 
@@ -62,20 +65,32 @@ class RoutesAdapter extends RecyclerView.Adapter {
             ButterKnife.bind(this, itemView);
         }
 
-        void setRoute(Route route) {
-            //TODO Pull this formatting logic to a SegmentViewModel
-            HashSet<String> distinctTravelModes = new HashSet<>();
-            Segments segments = route.getSegments();
-            for (Segment segment : segments) {
-                distinctTravelModes.add(segment.getTravelMode());
-            }
-            String allTravelModes = TextUtils.join(", ", distinctTravelModes);
+        @OnClick
+        void selectRoute(View view) {
+            Route route = routes.get(getAdapterPosition());
+            Context context = view.getContext();
 
+            Intent intent = new Intent(context, RouteDetailsActivity.class);
+            intent.putExtra(RouteDetailsActivity.EXTRA_ROUTE, Parcels.wrap(route));
+            context.startActivity(intent);
+        }
+
+        void setRoute(Route route) {
             Context context = itemView.getContext();
             providerView.setText(route.getProvider());
             routeTypeView.setText(route.getType());
             travelDurationView.setText(context.getString(R.string.text_display_minutes, route.getTravelDurationInMinutes()));
-            travelModesView.setText(context.getString(R.string.text_travel_modes, allTravelModes));
+            travelModesView.setText(context.getString(R.string.text_travel_modes, allTravelModes(route)));
+        }
+
+        private String allTravelModes(Route route) {
+            //TODO Pull this formatting logic to a SegmentViewModel
+            HashSet<String> distinctTravelModes = new HashSet<>();
+            List<Segment> segments = route.getSegments();
+            for (Segment segment : segments) {
+                distinctTravelModes.add(segment.getTravelMode());
+            }
+            return TextUtils.join(", ", distinctTravelModes);
         }
     }
 }

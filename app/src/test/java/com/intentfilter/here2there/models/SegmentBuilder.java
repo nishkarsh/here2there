@@ -2,7 +2,7 @@ package com.intentfilter.here2there.models;
 
 import java.util.ArrayList;
 
-class SegmentBuilder {
+public class SegmentBuilder {
     private final Segment segment;
 
     public SegmentBuilder() {
@@ -23,6 +23,11 @@ class SegmentBuilder {
 
     public SegmentBuilder withNextStop(Stop stop) {
         segment.stops.add(stop);
+        return this;
+    }
+
+    public SegmentBuilder withPolyline(String polyline) {
+        segment.polyline = polyline;
         return this;
     }
 

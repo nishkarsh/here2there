@@ -2,11 +2,14 @@ package com.intentfilter.here2there.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class Price {
     @JsonProperty
-    private String currency;
+    String currency;
     @JsonProperty
-    private double amount;
+    double amount;
 
     public Price() {
         //required by jackson

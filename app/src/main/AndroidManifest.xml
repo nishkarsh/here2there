@@ -14,12 +14,27 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".views.RouteSearchActivity"
-            android:label="@string/label_route_search">
+            android:label="@string/label_route_search"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".views.RouteDetailsActivity"
+            android:label="@string/label_route_details"
+            android:parentActivityName=".views.RouteSearchActivity" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
     </application>
 
 </manifest>

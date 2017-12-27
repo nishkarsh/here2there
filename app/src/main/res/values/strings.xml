@@ -8,6 +8,7 @@
     <string name="hint_enter_destination">Enter Destination</string>
 
     <string name="label_route_search">Route Search</string>
+    <string name="label_route_details">Route Details</string>
     <string name="label_origin">Origin</string>
     <string name="label_destination">Destination</string>
     <string name="label_search">Search</string>
