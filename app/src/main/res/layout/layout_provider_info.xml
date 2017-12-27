@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/viewProviderName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_large"
+        android:textStyle="bold"
+        tools:text="Nextbike" />
+
+    <TextView
+        android:id="@+id/viewDisclaimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewProviderName"
+        android:textSize="@dimen/font_medium"
+        tools:text="Our data is as live and real-time as possible." />
+
+    <TextView
+        android:id="@+id/viewAppLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewDisclaimer"
+        android:textSize="@dimen/font_small"
+        tools:text="https://itunes.apple.com/app/nextbike/id504288371?mt=8" />
+
+    <Button
+        android:id="@+id/buttonDismiss"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewAppLink"
+        android:layout_marginTop="20dp"
+        android:text="@string/label_dismiss" />
+
+</RelativeLayout>

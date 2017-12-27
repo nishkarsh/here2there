@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import com.intentfilter.here2there.R;
+import com.intentfilter.here2there.models.Provider;
 import com.intentfilter.here2there.models.Routes;
 import com.intentfilter.here2there.presenters.RouteSearchPresenter;
 
@@ -44,6 +45,16 @@ public class RouteSearchActivity extends AppCompatActivity implements RouteSearc
         routeListView.setLayoutManager(new LinearLayoutManager(this, VERTICAL, false));
         routeListView.addItemDecoration(new DividerItemDecoration(routeListView.getContext(), DividerItemDecoration.VERTICAL));
         routeListView.setAdapter(new RoutesAdapter(routes, this));
+    }
+
+    public void showProviderInfo(String provider) {
+        presenter.showProviderInfo(provider);
+    }
+
+    @Override
+    public void showProviderDialogFragment(Provider provider) {
+        ProviderDialogFragment.newInstance(provider)
+                .show(getSupportFragmentManager(), ProviderDialogFragment.TAG);
     }
 
     @Override

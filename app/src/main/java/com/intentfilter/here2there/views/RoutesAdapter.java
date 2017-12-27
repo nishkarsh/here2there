@@ -75,6 +75,12 @@ class RoutesAdapter extends RecyclerView.Adapter {
             context.startActivity(intent);
         }
 
+        @OnClick(R.id.viewProvider)
+        void showProviderInfo() {
+            String provider = routes.get(getAdapterPosition()).getProvider();
+            ((RouteSearchActivity) context).showProviderInfo(provider);
+        }
+
         void setRoute(Route route) {
             providerView.setText(route.getProvider());
             routeTypeView.setText(route.getType());

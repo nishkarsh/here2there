@@ -13,4 +13,5 @@
     <string name="label_route_details">Route Details</string>
     <string name="label_origin">Origin</string>
     <string name="label_destination">Destination</string>
+    <string name="label_dismiss">Dismiss</string>
 </resources>

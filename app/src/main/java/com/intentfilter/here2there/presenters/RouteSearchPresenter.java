@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
 import com.intentfilter.here2there.R;
+import com.intentfilter.here2there.models.Providers;
 import com.intentfilter.here2there.models.ServiceResponse;
 import com.intentfilter.here2there.services.TransitService;
 import com.intentfilter.here2there.services.gateways.GatewayFactory;
@@ -24,6 +25,7 @@ public class RouteSearchPresenter {
     private TransitService transitService;
     private Toaster toaster;
     private Logger logger;
+    private Providers providers;
 
     public RouteSearchPresenter(Context context, RouteSearchView view) {
         this(view, new TransitService(new GatewayFactory()), new Toaster(context), Logger.loggerFor(RouteSearchPresenter.class));
@@ -48,6 +50,7 @@ public class RouteSearchPresenter {
                 ServiceResponse responseBody = response.body();
                 if (responseBody != null) {
                     view.setRoutes(responseBody.getRoutes());
+                    providers = responseBody.getProviders();
                 }
             }
 
@@ -59,6 +62,10 @@ public class RouteSearchPresenter {
                 toaster.toast(R.string.error_occurred);
             }
         });
+    }
+
+    public void showProviderInfo(String providerName) {
+        view.showProviderDialogFragment(providers.get(providerName));
     }
 
     private void setLoaderIndication(boolean shouldShowLoader) {

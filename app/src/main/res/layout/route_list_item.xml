@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="true"
+        android:textStyle="bold"
         tools:text="U2" />
 
     <TextView
@@ -35,10 +36,10 @@
         android:id="@+id/viewTravelModes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toStartOf="@id/viewTravelDuration"
-        android:layout_below="@id/viewProvider"
         android:layout_alignStart="@id/viewProvider"
+        android:layout_below="@id/viewProvider"
         android:layout_marginTop="15dp"
+        android:layout_toStartOf="@id/viewTravelDuration"
         android:text="@string/text_travel_modes"
         tools:text="Travel modes include walking, subway and bus" />
 
