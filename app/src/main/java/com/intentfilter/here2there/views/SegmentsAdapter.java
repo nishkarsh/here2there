@@ -61,7 +61,8 @@ public class SegmentsAdapter extends RecyclerView.Adapter {
         public void setSegment(final Segment segment) {
             Context context = itemView.getContext();
             segmentModeView.setText(segment.getTravelMode());
-            segmentTimeView.setText(context.getString(R.string.text_display_minutes, segment.getDurationInMinutes()));
+            segmentTimeView.setText(context.getResources().getQuantityString(R.plurals.text_display_minutes,
+                    segment.getDurationInMinutes(), segment.getDurationInMinutes()));
         }
     }
 }

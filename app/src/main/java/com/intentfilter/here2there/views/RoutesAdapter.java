@@ -24,14 +24,16 @@ import butterknife.OnClick;
 
 class RoutesAdapter extends RecyclerView.Adapter {
     private List<Route> routes;
+    private Context context;
 
-    RoutesAdapter(List<Route> routes) {
+    RoutesAdapter(List<Route> routes, Context context) {
         this.routes = routes;
+        this.context = context;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.route_list_item, parent, false);
 
         return new RouteViewHolder(view);
@@ -66,20 +68,18 @@ class RoutesAdapter extends RecyclerView.Adapter {
         }
 
         @OnClick
-        void selectRoute(View view) {
+        void selectRoute() {
             Route route = routes.get(getAdapterPosition());
-            Context context = view.getContext();
-
             Intent intent = new Intent(context, RouteDetailsActivity.class);
             intent.putExtra(RouteDetailsActivity.EXTRA_ROUTE, Parcels.wrap(route));
             context.startActivity(intent);
         }
 
         void setRoute(Route route) {
-            Context context = itemView.getContext();
             providerView.setText(route.getProvider());
             routeTypeView.setText(route.getType());
-            travelDurationView.setText(context.getString(R.string.text_display_minutes, route.getTravelDurationInMinutes()));
+            travelDurationView.setText(context.getResources().getQuantityString(R.plurals.text_display_minutes,
+                    route.getTravelDurationInMinutes(), route.getTravelDurationInMinutes()));
             travelModesView.setText(context.getString(R.string.text_travel_modes, allTravelModes(route)));
         }
 

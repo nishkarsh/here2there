@@ -43,7 +43,7 @@ public class RouteSearchActivity extends AppCompatActivity implements RouteSearc
     public void setRoutes(Routes routes) {
         routeListView.setLayoutManager(new LinearLayoutManager(this, VERTICAL, false));
         routeListView.addItemDecoration(new DividerItemDecoration(routeListView.getContext(), DividerItemDecoration.VERTICAL));
-        routeListView.setAdapter(new RoutesAdapter(routes));
+        routeListView.setAdapter(new RoutesAdapter(routes, this));
     }
 
     @Override
